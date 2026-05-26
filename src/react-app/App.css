@@ -24,7 +24,7 @@
 }
 
 .app-header-title { 
-  font-size: 24px; 
+  font-size: 27px; 
   font-weight: 600; 
   margin: 0; 
   color: #ff0000; /* READTalk Red */
@@ -64,7 +64,7 @@
 
 .app-search-box { 
   position: relative; 
-  height: 44px; 
+  height: 47px; 
   background: #f0f0f0; 
   border: none; 
   border-radius: 24px; 
