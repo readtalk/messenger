@@ -1,4 +1,4 @@
-// src/App.tsx - settings.readtalk.workers.dev
+// src/App.tsx
 import { useState, useEffect } from "react";
 import MenuDotsVertical from "./assets/menu-dots-vertical.svg";
 import SearchIcon from "./assets/search.svg";
@@ -14,17 +14,15 @@ function App() {
   const [userId, setUserId] = useState("");
   const [email, setEmail] = useState("");
   const [showMenu, setShowMenu] = useState(false);
-  const [activeTab, setActiveTab] = useState("chat");
+  const [activeTab, setActiveTab] = useState("all");
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Fetch user params from URL
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setUserId(params.get("userId") || "");
     setEmail(params.get("email") || "");
   }, []);
 
-  // Load saved theme
   useEffect(() => {
     const saved = localStorage.getItem('readtalk_theme') as 'light' | 'dark' | null;
     if (saved) setTheme(saved);
@@ -43,13 +41,11 @@ function App() {
 
   return (
     <div className={`app-layout ${theme}`}>
-      {/* MAIN + SIDEBAR */}
       <div className="app-main">
+        {/* SIDEBAR KIRI */}
         <aside className="app-sidebar">
           <header className="app-header">
-            <div className="app-header-left">
-              <h1 className="app-header-title">READTalk</h1>
-            </div>
+            <h1 className="app-header-title">READTalk</h1>
             <div className="app-header-right">
               {userId && email && (
                 <span className="app-user-info">
@@ -72,31 +68,55 @@ function App() {
             </div>
           </header>
 
+          {/* TAB FILTER - mirip WA Web desktop */}
+          <div className="app-sidebar-tabs">
+            <button 
+              className={`app-tab-btn ${activeTab === "all" ? "active" : ""}`} 
+              onClick={() => setActiveTab("all")}
+            >
+              All
+            </button>
+            <button 
+              className={`app-tab-btn ${activeTab === "unread" ? "active" : ""}`} 
+              onClick={() => setActiveTab("unread")}
+            >
+              Unread
+            </button>
+            <button 
+              className={`app-tab-btn ${activeTab === "groups" ? "active" : ""}`} 
+              onClick={() => setActiveTab("groups")}
+            >
+              Groups
+            </button>
+          </div>
+
+          {/* SEARCH */}
           <div className="app-search-container">
             <div className="app-search-box">
               <img src={SearchIcon} alt="Search" className="app-search-icon" />
               <input 
                 type="text" 
-                placeholder="Search name or message..." 
+                placeholder="Search or start new chat" 
                 className="app-search-input" 
               />
             </div>
           </div>
 
-          <div className="app-empty">
-            <img src={EnvelopeIcon} alt="Empty" className="app-empty-icon" />
-            <p className="app-empty-text">No items to resend</p>
+          {/* CHAT LIST */}
+          <div className="app-chat-list">
+            {/* Kosong dulu, nanti isi mapping chat di sini */}
           </div>
         </aside>
 
+        {/* CHATROOM KAN */}
         <main className="app-content">
           <div className="app-empty">
-            <p className="app-empty-text">Select an item from sidebar to view details</p>
+            <p className="app-empty-text">Select a chat to start messaging</p>
           </div>
         </main>
       </div>
 
-      {/* BOTTOM NAV - mobile only */}
+      {/* BOTTOM NAV - cuma muncul di mobile */}
       <nav className="app-bottom-nav">
         <button 
           className={`app-bottom-tab ${activeTab === "chat" ? "active" : ""}`} 
@@ -128,7 +148,7 @@ function App() {
         </button>
       </nav>
 
-      {/* FAB - mobile only */}
+      {/* FAB - cuma muncul di mobile */}
       <button className="app-fab">
         <img src={UserAddIcon} alt="Add" />
       </button>
