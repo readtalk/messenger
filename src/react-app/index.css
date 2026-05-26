@@ -26,6 +26,7 @@ html, body, #root {
   display: block;
 }
 
+/* Hapus flex center dari body. Ini yang bikin layout lo ketengah dan gak full */
 body {
   margin: 0;
   min-width: 320px;
@@ -43,7 +44,7 @@ a:hover {
   color: #25d366;
 }
 
-/* Hapus style default Vite */
+/* Hapus style h1, button default Vite. Biar gak bentrok sama .app-header h1 dan .app-bottom-tab */
 h1 {
   margin: 0;
 }
