@@ -1,0 +1,326 @@
+/* src/App.css */
+
+.app-layout { 
+  background: #ffffff; 
+  color: #111b21; 
+  height: 100dvh; 
+  display: flex; 
+  flex-direction: column; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  overflow: hidden; 
+}
+
+/* HEADER */
+.app-header { 
+  height: 60px; 
+  background: #ffffff; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 0 16px 0 20px; 
+  border-bottom: none; 
+  flex-shrink: 0; 
+  color: #111b21; 
+}
+
+.app-header-title { 
+  font-size: 24px; 
+  font-weight: 600; 
+  margin: 0; 
+  color: #ff0000; /* READTalk Red */
+  letter-spacing: -0.5px; 
+}
+
+.app-header-right { 
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+}
+
+.app-user-info { 
+  font-size: 12px; 
+  color: #667781; 
+}
+
+.app-menu-btn { 
+  background: none; 
+  border: none; 
+  padding: 8px; 
+  cursor: pointer; 
+}
+
+.app-menu-btn img { 
+  width: 24px; 
+  height: 24px; 
+  filter: brightness(0); /* Icon */
+}
+
+/* SEARCH BAR */
+.app-search-container { 
+  padding: 6px 16px 12px 16px; 
+  background: #ffffff; 
+  flex-shrink: 0; 
+}
+
+.app-search-box { 
+  position: relative; 
+  height: 44px; 
+  background: #f0f0f0; 
+  border: none; 
+  border-radius: 24px; 
+}
+
+.app-search-icon { 
+  position: absolute; 
+  left: 14px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  width: 20px; 
+  height: 20px; 
+  opacity: 0.5; 
+}
+
+.app-search-input { 
+  width: 100%; 
+  height: 100%; 
+  padding: 0 12px 0 44px; 
+  background: transparent; 
+  border: none; 
+  color: #111b21; 
+  font-size: 15px; 
+  outline: none; 
+}
+
+.app-search-input::placeholder { 
+  color: #667781; 
+}
+
+/* MAIN LAYOUT */
+.app-main { 
+  flex: 1; 
+  display: flex; 
+  overflow: hidden; 
+}
+
+.app-sidebar { 
+  width: 100%; 
+  max-width: 100%; 
+  background: #ffffff; 
+  border-right: none; 
+  overflow-y: auto; 
+  flex-shrink: 0; 
+}
+
+.app-content { 
+  display: none; 
+}
+
+/* EMPTY STATE */
+.app-empty { 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 40px 20px; 
+  color: #667781; 
+}
+
+.app-empty-icon { 
+  width: 80px; 
+  opacity: 0.3; 
+  margin-bottom: 16px; 
+}
+
+.app-empty-text { 
+  font-size: 15px; 
+  color: #667781; 
+}
+
+/* DROPDOWN MENU */
+.app-dropdown { 
+  position: absolute; 
+  top: 56px; 
+  right: 12px; 
+  background: white; 
+  border: 1px solid #e0e0e0; 
+  border-radius: 8px; 
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15); 
+  min-width: 180px; 
+  z-index: 1000; 
+}
+
+.app-dropdown-item, .app-mode-toggle { 
+  width: 100%; 
+  padding: 12px 16px; 
+  background: none; 
+  border: none; 
+  text-align: left; 
+  color: #111b21; 
+  font-size: 15px; 
+  cursor: pointer; 
+}
+
+.app-dropdown-item:hover, .app-mode-toggle:hover { 
+  background: #f5f5f5; 
+}
+
+.app-logout-item { 
+  color: #d32f2f !important; 
+}
+
+/* BOTTOM NAVIGATION */
+.app-bottom-nav { 
+  height: 68px; 
+  background: #ffffff; 
+  border-top: none; 
+  display: flex; 
+  flex-shrink: 0; 
+  padding-bottom: 8px;
+}
+
+.app-bottom-tab { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  color: #54656f; 
+  font-size: 12px; 
+  cursor: pointer; 
+  background: none; 
+  border: none; 
+  gap: 4px; 
+}
+
+.app-bottom-tab.active { 
+  color: #ff0000; /* Text active */
+}
+
+.app-bottom-icon { 
+  width: 24px; 
+  height: 24px; 
+  filter: brightness(0) invert(0.4); 
+}
+
+.app-bottom-tab.active .app-bottom-icon { 
+  filter: brightness(0) saturate(100%) invert(13%) sepia(94%) saturate(7483%) hue-rotate(0deg) brightness(98%) contrast(107%); /* Icon jadi merah */
+  background: none; 
+  padding: 0;
+}
+
+/* FLOATING ACTION BUTTON */
+.app-fab { 
+  position: fixed; 
+  bottom: 84px; 
+  right: 16px; 
+  width: 56px; 
+  height: 56px; 
+  background: #ff0000; 
+  border: none; 
+  border-radius: 16px; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  z-index: 100; 
+  cursor: pointer; 
+}
+
+.app-fab img { 
+  width: 24px; 
+  filter: brightness(0) invert(1); 
+}
+
+/* ──────────────────────────────────────────────── */
+/* DARK MODE */
+/* ──────────────────────────────────────────────── */
+
+.app-layout.dark { 
+  background: #111b21; 
+  color: #e9edef; 
+}
+
+.app-layout.dark .app-header { 
+  background: #111b21; 
+  border-bottom: none; 
+}
+
+.app-layout.dark .app-header-title { 
+  color: #ff0000; /* Tetap merah */
+}
+
+.app-layout.dark .app-user-info { 
+  color: #8696a0; 
+}
+
+.app-layout.dark .app-menu-btn img { 
+  filter: brightness(0) invert(1); 
+}
+
+.app-layout.dark .app-search-container { 
+  background: #111b21; 
+}
+
+.app-layout.dark .app-search-box { 
+  background: #2a3942; 
+}
+
+.app-layout.dark .app-search-input { 
+  color: #e9edef; 
+}
+
+.app-layout.dark .app-search-input::placeholder { 
+  color: #8696a0; 
+}
+
+.app-layout.dark .app-sidebar { 
+  background: #111b21; 
+  border-right: none; 
+}
+
+.app-layout.dark .app-empty { 
+  color: #8696a0; 
+}
+
+.app-layout.dark .app-empty-text { 
+  color: #8696a0; 
+}
+
+.app-layout.dark .app-dropdown { 
+  background: #202c33; 
+  border-color: #2a3942; 
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.app-layout.dark .app-dropdown-item, 
+.app-layout.dark .app-mode-toggle { 
+  color: #e9edef; 
+}
+
+.app-layout.dark .app-dropdown-item:hover, 
+.app-layout.dark .app-mode-toggle:hover { 
+  background: #2a3942; 
+}
+
+.app-layout.dark .app-bottom-nav { 
+  background: #111b21; 
+}
+
+.app-layout.dark .app-bottom-tab { 
+  color: #8696a0; 
+}
+
+.app-layout.dark .app-bottom-tab.active { 
+  color: #ff0000; /* Teks merah pas aktif di dark mode */
+}
+
+.app-layout.dark .app-bottom-icon { 
+  filter: brightness(0) invert(0.6); 
+}
+
+.app-layout.dark .app-bottom-tab.active .app-bottom-icon { 
+  filter: brightness(0) saturate(100%) invert(13%) sepia(94%) saturate(7483%) hue-rotate(0deg) brightness(98%) contrast(107%);
+  background: none; 
+  padding: 0;
+}
