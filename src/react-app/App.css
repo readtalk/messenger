@@ -14,7 +14,7 @@
 
 /* HEADER - Putih dengan teks hijau seperti di screenshot */
 .app-header {
-  height: 56px;
+  height: 60px;
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .app-header-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 600;
   margin: 0;
   color: #008069; /* Hijau WhatsApp Android */
@@ -66,7 +66,7 @@
 
 .app-search-box {
   position: relative;
-  height: 40px;
+  height: 44px;
   background: #f0f0f0;
   border: none;
   border-radius: 24px;
@@ -175,7 +175,7 @@
 
 /* BOTTOM NAVIGATION */
 .app-bottom-nav {
-  height: 64px;
+  height: 68px;
   background: #ffffff;
   border-top: none;
   display: flex;
