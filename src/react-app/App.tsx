@@ -1,6 +1,5 @@
-// src/App.tsx - settings.readtalk.workers.dev //
+// src/App.tsx
 import { useState, useEffect } from "react";
-
 import MenuDotsVertical from "./assets/menu-dots-vertical.svg";
 import SearchIcon from "./assets/search.svg";
 import EnvelopeIcon from "./assets/envelope.svg";
@@ -9,7 +8,6 @@ import BubbleDiscussionIcon from "./assets/bubble-discussion.svg";
 import CameraIcon from "./assets/at.svg";
 import UsersIcon from "./assets/users.svg";
 import PhoneCallIcon from "./assets/phone-call.svg";
-
 import "./App.css";
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");
-  const [theme, setTheme] = useState<'light' | 'dark'>('light'); // default light
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   // Fetch user params from URL
   useEffect(() => {
@@ -32,8 +30,16 @@ function App() {
     if (saved) setTheme(saved);
   }, []);
 
+  // Update meta theme-color buat status bar HP
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', theme === 'dark'? '#111b21' : '#ffffff');
+    }
+  }, [theme]);
+
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme = theme === 'light'? 'dark' : 'light';
     setTheme(newTheme);
     localStorage.setItem('readtalk_theme', newTheme);
   };
@@ -46,25 +52,22 @@ function App() {
   return (
     <div className={`app-layout ${theme}`}>
       <header className="app-header">
-        <div className="app-header-left">         
+        <div className="app-header-left">
           <h1 className="app-header-title">READTalk</h1>
         </div>
-
         <div className="app-header-right">
           {userId && email && (
             <span className="app-user-info">
               {userId.slice(0, 8)}... | {email.split("@")[0]}
             </span>
           )}
-
           <button className="app-menu-btn" onClick={() => setShowMenu(!showMenu)}>
             <img src={MenuDotsVertical} alt="Menu" />
           </button>
-
           {showMenu && (
             <div className="app-dropdown">
               <button className="app-mode-toggle" onClick={toggleTheme}>
-                {theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+                {theme === 'light'? 'Switch to Dark Mode' : 'Switch to Light Mode'}
               </button>
               <button className="app-dropdown-item app-logout-item" onClick={handleLogout}>
                 Logout
@@ -78,11 +81,7 @@ function App() {
       <div className="app-search-container">
         <div className="app-search-box">
           <img src={SearchIcon} alt="Search" className="app-search-icon" />
-          <input
-            type="text"
-            placeholder="Search name or message..."
-            className="app-search-input"
-          />
+          <input type="text" placeholder="Search name or message..." className="app-search-input" />
         </div>
       </div>
 
@@ -94,7 +93,6 @@ function App() {
             <p className="app-empty-text">No items to resend</p>
           </div>
         </aside>
-
         <main className="app-content">
           <p>Select an item from sidebar to view details</p>
         </main>
@@ -102,31 +100,19 @@ function App() {
 
       {/* BOTTOM NAV */}
       <nav className="app-bottom-nav">
-        <button
-          className={`app-bottom-tab ${activeTab === "chat" ? "active" : ""}`}
-          onClick={() => setActiveTab("chat")}
-        >
+        <button className={`app-bottom-tab ${activeTab === "chat"? "active" : ""}`} onClick={() => setActiveTab("chat")} >
           <img src={BubbleDiscussionIcon} alt="Chat" className="app-bottom-icon" />
           <span>Chat</span>
         </button>
-        <button
-          className={`app-bottom-tab ${activeTab === "updates" ? "active" : ""}`}
-          onClick={() => setActiveTab("updates")}
-        >
+        <button className={`app-bottom-tab ${activeTab === "updates"? "active" : ""}`} onClick={() => setActiveTab("updates")} >
           <img src={CameraIcon} alt="Updates" className="app-bottom-icon" />
           <span>Updates</span>
         </button>
-        <button
-          className={`app-bottom-tab ${activeTab === "communities" ? "active" : ""}`}
-          onClick={() => setActiveTab("communities")}
-        >
+        <button className={`app-bottom-tab ${activeTab === "communities"? "active" : ""}`} onClick={() => setActiveTab("communities")} >
           <img src={UsersIcon} alt="Communities" className="app-bottom-icon" />
           <span>Communities</span>
         </button>
-        <button
-          className={`app-bottom-tab ${activeTab === "calls" ? "active" : ""}`}
-          onClick={() => setActiveTab("calls")}
-        >
+        <button className={`app-bottom-tab ${activeTab === "calls"? "active" : ""}`} onClick={() => setActiveTab("calls")} >
           <img src={PhoneCallIcon} alt="Calls" className="app-bottom-icon" />
           <span>Calls</span>
         </button>
