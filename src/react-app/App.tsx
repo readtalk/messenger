@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import MenuDotsVertical from "./assets/menu-dots-vertical.svg";
 import SearchIcon from "./assets/search.svg";
-import EnvelopeIcon from "./assets/envelope.svg";
 import UserAddIcon from "./assets/plus-small.svg";
 import BubbleDiscussionIcon from "./assets/bubble-discussion.svg";
 import CameraIcon from "./assets/at.svg";
@@ -42,7 +41,6 @@ function App() {
   return (
     <div className={`app-layout ${theme}`}>
       <div className="app-main">
-        {/* SIDEBAR KIRI */}
         <aside className="app-sidebar">
           <header className="app-header">
             <h1 className="app-header-title">READTalk</h1>
@@ -68,7 +66,6 @@ function App() {
             </div>
           </header>
 
-          {/* TAB FILTER - mirip WA Web desktop */}
           <div className="app-sidebar-tabs">
             <button 
               className={`app-tab-btn ${activeTab === "all" ? "active" : ""}`} 
@@ -90,7 +87,6 @@ function App() {
             </button>
           </div>
 
-          {/* SEARCH */}
           <div className="app-search-container">
             <div className="app-search-box">
               <img src={SearchIcon} alt="Search" className="app-search-icon" />
@@ -102,13 +98,11 @@ function App() {
             </div>
           </div>
 
-          {/* CHAT LIST */}
           <div className="app-chat-list">
-            {/* Kosong dulu, nanti isi mapping chat di sini */}
+            {/* Mapping chat lo taruh di sini */}
           </div>
         </aside>
 
-        {/* CHATROOM KAN */}
         <main className="app-content">
           <div className="app-empty">
             <p className="app-empty-text">Select a chat to start messaging</p>
@@ -116,7 +110,6 @@ function App() {
         </main>
       </div>
 
-      {/* BOTTOM NAV - cuma muncul di mobile */}
       <nav className="app-bottom-nav">
         <button 
           className={`app-bottom-tab ${activeTab === "chat" ? "active" : ""}`} 
@@ -148,7 +141,6 @@ function App() {
         </button>
       </nav>
 
-      {/* FAB - cuma muncul di mobile */}
       <button className="app-fab">
         <img src={UserAddIcon} alt="Add" />
       </button>
