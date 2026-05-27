@@ -10,24 +10,18 @@ import UsersIcon from "./assets/users.svg";
 import PhoneCallIcon from "./assets/phone-call.svg";
 import "./App.css";
 
-type User = {
-  userId: string;
-  email: string;
-  displayname: string | null;
-};
-
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState("");
+  const [email, setEmail] = useState("");
   const [showMenu, setShowMenu] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Ambil data user dari cookie, bukan dari URL
+  // Fetch user params from URL
   useEffect(() => {
-    fetch('/api/me', { credentials: 'include' })
-     .then(res => res.ok? res.json() : null)
-     .then(setUser)
-     .catch(() => setUser(null));
+    const params = new URLSearchParams(window.location.search);
+    setUserId(params.get("userId") || "");
+    setEmail(params.get("email") || "");
   }, []);
 
   // Load saved theme
@@ -51,16 +45,9 @@ function App() {
   };
 
   const handleLogout = () => {
-    fetch('/api/logout', { method: 'POST', credentials: 'include' });
-    window.location.href = '/';
+    window.parent.postMessage({ type: "LOGOUT" }, "https://readtalk.pages.dev");
+    setShowMenu(false);
   };
-
-  // Kalau belum ada displayname, paksa ke /profile
-  useEffect(() => {
-    if (user &&!user.displayname) {
-      window.location.href = '/profile';
-    }
-  }, [user]);
 
   return (
     <div className={`app-layout ${theme}`}>
@@ -69,9 +56,9 @@ function App() {
           <h1 className="app-header-title">READTalk</h1>
         </div>
         <div className="app-header-right">
-          {user && (
+          {userId && email && (
             <span className="app-user-info">
-              @{user.displayname || user.email.split("@")[0]}
+              {userId.slice(0, 8)}... | {email.split("@")[0]}
             </span>
           )}
           <button className="app-menu-btn" onClick={() => setShowMenu(!showMenu)}>
@@ -113,19 +100,19 @@ function App() {
 
       {/* BOTTOM NAV */}
       <nav className="app-bottom-nav">
-        <button className={`app-bottom-tab ${activeTab === "chat"? "active" : ""}`} onClick={() => setActiveTab("chat")}>
+        <button className={`app-bottom-tab ${activeTab === "chat"? "active" : ""}`} onClick={() => setActiveTab("chat")} >
           <img src={BubbleDiscussionIcon} alt="Chat" className="app-bottom-icon" />
           <span>Chat</span>
         </button>
-        <button className={`app-bottom-tab ${activeTab === "updates"? "active" : ""}`} onClick={() => setActiveTab("updates")}>
+        <button className={`app-bottom-tab ${activeTab === "updates"? "active" : ""}`} onClick={() => setActiveTab("updates")} >
           <img src={CameraIcon} alt="Updates" className="app-bottom-icon" />
           <span>Updates</span>
         </button>
-        <button className={`app-bottom-tab ${activeTab === "communities"? "active" : ""}`} onClick={() => setActiveTab("communities")}>
+        <button className={`app-bottom-tab ${activeTab === "communities"? "active" : ""}`} onClick={() => setActiveTab("communities")} >
           <img src={UsersIcon} alt="Communities" className="app-bottom-icon" />
           <span>Communities</span>
         </button>
-        <button className={`app-bottom-tab ${activeTab === "calls"? "active" : ""}`} onClick={() => setActiveTab("calls")}>
+        <button className={`app-bottom-tab ${activeTab === "calls"? "active" : ""}`} onClick={() => setActiveTab("calls")} >
           <img src={PhoneCallIcon} alt="Calls" className="app-bottom-icon" />
           <span>Calls</span>
         </button>
