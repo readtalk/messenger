@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { AuthProvider, useAuth } from "./auth/AuthContext.tsx"
+import { AuthProvider, useAuth } from "./auth/AuthContext"
 import MenuDotsVertical from "./assets/menu-dots-vertical.svg"
 import SearchIcon from "./assets/search.svg"
 import EnvelopeIcon from "./assets/envelope.svg"
@@ -35,6 +35,11 @@ function AppContent() {
     localStorage.setItem('readtalk_theme', newTheme)
   }
 
+  const handleLogin = () => {
+    const authUrl = `https://auth.readtalk.workers.dev/authorize?client_id=messenger&redirect_uri=${encodeURIComponent(window.location.origin)}`
+    window.location.href = authUrl
+  }
+
   if (loading) return <div>Loading...</div>
 
   return (
@@ -57,9 +62,15 @@ function AppContent() {
               <button className="app-mode-toggle" onClick={toggleTheme}>
                 {theme === 'light'? 'Switch to Dark Mode' : 'Switch to Light Mode'}
               </button>
-              <button className="app-dropdown-item app-logout-item" onClick={logout}>
-                Logout
-              </button>
+              {user? (
+                <button className="app-dropdown-item app-logout-item" onClick={logout}>
+                  Logout
+                </button>
+              ) : (
+                <button className="app-dropdown-item" onClick={handleLogin}>
+                  Login
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -82,7 +93,7 @@ function AppContent() {
           </div>
         </aside>
         <main className="app-content">
-          <p>Welcome {user?.display_name}</p>
+          <p>Welcome {user?.display_name || 'Guest'}</p>
         </main>
       </div>
 
