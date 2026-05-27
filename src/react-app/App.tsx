@@ -36,9 +36,9 @@ function AppContent() {
   }
 
   const handleLogin = () => {
-    const authUrl = `https://auth.readtalk.workers.dev/authorize?client_id=messenger&redirect_uri=${encodeURIComponent(window.location.origin)}`
-    window.location.href = authUrl
-  }
+  const authUrl = `https://auth.readtalk.workers.dev/authorize?response_type=token&client_id=messenger&redirect_uri=${encodeURIComponent(window.location.origin)}`
+  window.location.href = authUrl
+}
 
   if (loading) return <div>Loading...</div>
 
