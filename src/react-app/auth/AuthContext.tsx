@@ -1,53 +1,53 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState } from "react"
 
-type User = { user_id: string; email: string; display_name: string }
+type User = {
+  id: string
+  email: string
+  display_name: string
+}
 
 type AuthContextType = {
   user: User | null
   loading: boolean
+  login: (token: string) => void
   logout: () => void
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
-export function AuthProvider({ children }: { children: ReactNode }) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // Ambil userId & email dari URL setelah redirect dari repo 2
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const userId = params.get('userId')
-    const email = params.get('email')
-    const auth = params.get('authentication')
-
-    if (userId && email && auth === 'true') {
-      setUser({
-        user_id: userId,
-        email: email,
-        display_name: email.split('@')[0] // repo 2 nggak kirim display_name
-      })
-      localStorage.setItem('rt_user', JSON.stringify({ user_id: userId, email }))
-      window.history.replaceState({}, '', '/')
+    const token = localStorage.getItem("readtalk_token")
+    if (!token) {
       setLoading(false)
       return
     }
-
-    // Cek localStorage kalau udah pernah login
-    const saved = localStorage.getItem('rt_user')
-    if (saved) {
-      setUser(JSON.parse(saved))
-    }
-    setLoading(false)
+    fetch("https://auth.readtalk.workers.dev/api/me", {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+     .then(r => r.ok? r.json() : null)
+     .then(u => {
+        setUser(u)
+        setLoading(false)
+      })
+     .catch(() => setLoading(false))
   }, [])
 
+  const login = (token: string) => {
+    localStorage.setItem("readtalk_token", token)
+    window.location.reload()
+  }
+
   const logout = () => {
-    localStorage.removeItem('rt_user')
+    localStorage.removeItem("readtalk_token")
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
@@ -55,6 +55,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export const useAuth = () => {
   const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider')
+  if (!ctx) throw new Error("useAuth must be inside AuthProvider")
   return ctx
 }
