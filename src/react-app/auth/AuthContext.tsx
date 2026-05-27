@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { getProfile } from './api'
 
 type User = { user_id: string; email: string; display_name: string }
+
 type AuthContextType = {
   user: User | null
   token: string | null
@@ -17,6 +18,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [token, setToken] = useState<string | null>(localStorage.getItem('rt_token'))
   const [loading, setLoading] = useState(true)
 
+  // Ambil token dari URL setelah redirect dari auth.readtalk.workers.dev
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const tokenFromUrl = params.get('token')
+    if (tokenFromUrl) {
+      login(tokenFromUrl)
+      window.history.replaceState({}, '', '/')
+    }
+  }, [])
+
+  // Kalau ada token, fetch profile user
   useEffect(() => {
     if (!token) {
       setLoading(false)
