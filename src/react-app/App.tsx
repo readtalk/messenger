@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { AuthProvider, useAuth } from "./auth/AuthContext"
+import { AuthProvider, useAuth } from "./auth/AuthContext.tsx"
 import MenuDotsVertical from "./assets/menu-dots-vertical.svg"
 import SearchIcon from "./assets/search.svg"
 import EnvelopeIcon from "./assets/envelope.svg"
