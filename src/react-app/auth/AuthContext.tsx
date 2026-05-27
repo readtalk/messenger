@@ -1,13 +1,10 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-import { getProfile } from './api'
 
 type User = { user_id: string; email: string; display_name: string }
 
 type AuthContextType = {
   user: User | null
-  token: string | null
   loading: boolean
-  login: (token: string) => void
   logout: () => void
 }
 
@@ -15,44 +12,42 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [token, setToken] = useState<string | null>(localStorage.getItem('rt_token'))
   const [loading, setLoading] = useState(true)
 
-  // Ambil token dari URL setelah redirect dari auth.readtalk.workers.dev
+  // Ambil userId & email dari URL setelah redirect dari repo 2
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const tokenFromUrl = params.get('token')
-    if (tokenFromUrl) {
-      login(tokenFromUrl)
-      window.history.replaceState({}, '', '/')
-    }
-  }, [])
+    const userId = params.get('userId')
+    const email = params.get('email')
+    const auth = params.get('authentication')
 
-  // Kalau ada token, fetch profile user
-  useEffect(() => {
-    if (!token) {
+    if (userId && email && auth === 'true') {
+      setUser({
+        user_id: userId,
+        email: email,
+        display_name: email.split('@')[0] // repo 2 nggak kirim display_name
+      })
+      localStorage.setItem('rt_user', JSON.stringify({ user_id: userId, email }))
+      window.history.replaceState({}, '', '/')
       setLoading(false)
       return
     }
-    getProfile(token)
-     .then(setUser)
-     .catch(() => logout())
-     .finally(() => setLoading(false))
-  }, [token])
 
-  const login = (newToken: string) => {
-    localStorage.setItem('rt_token', newToken)
-    setToken(newToken)
-  }
+    // Cek localStorage kalau udah pernah login
+    const saved = localStorage.getItem('rt_user')
+    if (saved) {
+      setUser(JSON.parse(saved))
+    }
+    setLoading(false)
+  }, [])
 
   const logout = () => {
-    localStorage.removeItem('rt_token')
-    setToken(null)
+    localStorage.removeItem('rt_user')
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, logout }}>
       {children}
     </AuthContext.Provider>
   )
